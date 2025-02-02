@@ -54,6 +54,10 @@ fun LocationDisplay(
     //locationData object from the viewModel state
     val location = viewModel.location.value
 
+    //holds the string for the address
+    val address = location?.let {
+        locationUtils.reverseGeocodeLocation(location)
+    }
     //launches a popup activity and captures the result, is uses a contract to define what it requests
     val requestPermissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestMultiplePermissions(),
@@ -95,7 +99,7 @@ fun LocationDisplay(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         if (location != null) {
-            Text("Address: ${location.latitude}, ${location.longitude}")
+            Text("Address: ${location.latitude}, ${location.longitude} \n $address")
         }
         else {
             Text("Location not available")
